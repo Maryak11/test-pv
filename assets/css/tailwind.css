@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Manrope', sans-serif;
+  }
+  :root {
+    --mainBgColor: #fff;
+    background-color: var(--mainBgColor);
+  }
+  html {
+    min-height: 100vh;
+  }
+  body,
+  div#__nuxt,
+  div#__layout {
+    min-height: 100vh;
+  }
+  html.light {
+    background-color: #fff;
+    color: #27272a;
+  }
+  html.dark {
+    color: #fff;
+    background-color: #18181b;
+  }
+}
+
+.fadeModal-enter-from,
+.fadeModal-leave-to {
+  opacity: 0;
+}
+
+.fadeModal-enter-active,
+.fadeModal-leave-active {
+  transition: opacity 0.2s;
+}
+
+@layer components {
+}

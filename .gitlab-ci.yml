@@ -1,0 +1,27 @@
+stages:
+  - PROD
+  - DEVZONE
+
+PROD update app:
+  stage: PROD
+  tags: [deploy]
+  only:
+    refs:
+      - main
+  when: manual
+  script:
+    - cp /srv/configs/npmrc-front ./.npmrc
+    - cp /srv/configs/env-front ./.env
+    - docker-compose up --build -d
+
+DEVZONE update app:
+  stage: DEVZONE
+  tags: [dev-lk1]
+  only:
+    refs:
+      - devzone
+  when: manual
+  script:
+    - cp /srv/configs/npmrc-front ./.npmrc
+    - cp /srv/configs/env-front ./.env
+    - docker-compose up --build -d
