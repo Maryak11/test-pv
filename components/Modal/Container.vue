@@ -18,6 +18,7 @@
           :type="modal.type"
           :button="modal.button"
           :prop="modal.prop"
+          :icon="modal.icon"
           :header-description="modal.headerDescription"
           :fields="modal.fields"
           @close="(id:string) => close(id)"
@@ -50,6 +51,7 @@ const addModal = (
     fields,
     prop,
     timer,
+    icon,
   }: IModal,
   id: string,
 ) => {
@@ -64,6 +66,7 @@ const addModal = (
     timer,
     headerDescription,
     fields,
+    icon,
     component: component ? markRaw(component) : undefined,
   });
 };

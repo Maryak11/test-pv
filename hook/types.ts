@@ -16,6 +16,7 @@ export interface IModal {
   headerDescription?: string;
   fields?: boolean | any;
   timer?: number;
+  icon?: string;
 }
 
 export interface IComponentProps extends FunctionalComponent {

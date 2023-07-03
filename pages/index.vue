@@ -74,6 +74,7 @@ const modal1 = useModal({
   headerDescription: 'Подтвердите согласие',
   description: 'Вы уверены?',
   type: 'confirm',
+  icon: 'flag',
   fields: true,
 });
 
@@ -101,6 +102,7 @@ const modal6 = useModal({
   description:
     'Оплата прошла успешно. Фишки будут начислены на ва счет в ближайшее время. Желаем вам удачной игры!',
   type: 'success',
+  icon: 'flag',
   button: {
     text: 'Хорошо!',
     type: 'confirm',

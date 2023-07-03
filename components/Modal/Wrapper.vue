@@ -4,65 +4,24 @@
     :id="id"
     class="modal-container relative flex w-[90%] flex-col justify-between overflow-hidden rounded-xl border-2 border-[#3364c6] bg-[#000519] transition-all sm:w-[70%] md:w-[50%] lg:w-[40%]"
   >
-    <section
-      class="relative flex items-center justify-center rounded-tl-xl rounded-tr-xl bg-[#01143f] p-2 text-xl font-semibold text-[#589fe7]"
-    >
-      {{ header }}
+    <ModalHeader
+      v-if="header"
+      :header="header"
+      :timer="timer"
+      @close="emit('close', id)"
+    />
 
-      <div
-        v-if="timer"
-        class="absolute left-4 top-2 text-white"
-      >
-        {{ timer }}
-      </div>
-
-      <div
-        class="absolute right-2 top-1 cursor-pointer text-white transition-all hover:opacity-50"
-        @click.stop="emit('close', id)"
-      >
-        <Icon
-          name="close"
-          size="lg"
-          fill="fill-white"
-        />
-      </div>
-    </section>
-
-    <section
-      v-if="!component"
-      class="flex flex-col items-center gap-3 px-10 py-8"
-    >
-      <div
-        v-if="type !== 'notification'"
-        class="flex flex-col items-center gap-10"
-      >
-        <Icon
-          name="flag"
-          size="xl"
-          fill="fill-white"
-        />
-        <div class="flex flex-col items-center">
-          <div class="flex flex-col items-center gap-6 text-white">
-            <h2
-              class="text-center text-xl font-semibold"
-              :class="{ 'text-red-600': type === 'error', 'text-green-600': type === 'success' }"
-            >
-              {{ headerDescription }}
-            </h2>
-          </div>
-        </div>
-      </div>
-      <p
-        class="text-center text-lg font-medium text-blue-100"
-        v-html="description"
-      ></p>
-    </section>
-    <section
-      v-else
-      class="flex flex-col items-center gap-3 px-10 py-8 text-white"
-    >
+    <section class="flex flex-col items-center gap-3 px-10 py-8">
+      <ModalBody
+        v-if="!component"
+        :type="type"
+        :icon="icon"
+        :header-description="headerDescription"
+        :description="description"
+      />
       <component
         :is="component"
+        v-else
         ref="customComponent"
         v-bind="prop"
         class="px-10"
@@ -84,7 +43,6 @@
       />
     </section>
   </div>
-  <!-- </Transition> -->
 </template>
 
 <script setup lang="ts">
@@ -102,12 +60,12 @@ const props = defineProps<{
   button?: IButton;
   prop: any;
   timer?: number;
+  icon?: string;
   headerDescription?: string;
 }>();
 
 const customComponent = ref<IComponentProps | null>(null);
 const customButtons = ref<HTMLElement | null>(null);
-const timer = ref<number>(0);
 
 const emit = defineEmits<{
   (e: 'close', value: string): void;
@@ -145,24 +103,9 @@ const addCustomButtons = () => {
   }
 };
 
-const startTimer = () => {
-  if (!props.timer) {
-    return;
-  }
-  timer.value = props.timer;
-  const interval = setInterval(() => {
-    timer.value -= 1;
-    if (timer.value === 0) {
-      clearInterval(interval);
-      emit('close', props.id);
-    }
-  }, 1000);
-};
-
 onMounted(() => {
   clickOutsideModal();
   addCustomButtons(); // метод для добавления в футер кастомных кнопок (пробовал сделать через телепорт, но тогда не работает нормально анимация, в итоге пришел к такому костылю), главное в компоненте который прокидаваешь обретке кнопок задать id="customButtons"
-  startTimer();
 });
 
 onBeforeUnmount(() => {
