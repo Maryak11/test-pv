@@ -22,6 +22,6 @@ yarn dev
 
 ## Node Version
 
-v16.17.1
+v16.19.0 or v18.14.0
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
