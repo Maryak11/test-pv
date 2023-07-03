@@ -28,15 +28,5 @@
   }
 }
 
-.fadeModal-enter-from,
-.fadeModal-leave-to {
-  opacity: 0;
-}
-
-.fadeModal-enter-active,
-.fadeModal-leave-active {
-  transition: opacity 0.2s;
-}
-
 @layer components {
 }

@@ -74,7 +74,6 @@ const iconSize = computed(() => {
 
 const geticon = () => {
   let res = importedIcon() || '';
-  console.log({ res });
 
   if (props.fill || props.stroke) {
     if (res.match(/path/)) {

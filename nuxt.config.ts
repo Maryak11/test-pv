@@ -1,10 +1,5 @@
 export default defineNuxtConfig({
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/google-fonts',
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/google-fonts'],
 
   ssr: false,
 

@@ -1,5 +1,6 @@
 <template>
   <div class="relative flex flex-wrap justify-center gap-4 p-2">
+    <Ellipse />
     <button
       class="rounded-md bg-zinc-900 p-2 text-lg text-white transition-all hover:bg-zinc-700"
       @click.stop="btn"
@@ -30,6 +31,12 @@
     >
       Standart Notification Modal
     </button>
+    <button
+      class="rounded-md bg-zinc-900 p-2 text-lg text-white transition-all hover:bg-zinc-700"
+      @click="btn6"
+    >
+      Success Modal
+    </button>
   </div>
 </template>
 
@@ -47,6 +54,8 @@ const modal = useModal({
     text: 'Далее',
     type: 'confirm',
   },
+  timer: 20,
+
   fields: true, // Для получения полей объявленный в кастомном компоененте после нажатия кнокпи Далее await modal.confirm()
 });
 
@@ -85,6 +94,18 @@ const modal3 = useModal({
   description: 'Вы вошли в игру на другом устройстве или в другом окне',
   type: 'notification',
 });
+
+const modal6 = useModal({
+  header: 'Благодарим за покупку!',
+  headerDescription: 'Ваша покупка обрабатывается!',
+  description:
+    'Оплата прошла успешно. Фишки будут начислены на ва счет в ближайшее время. Желаем вам удачной игры!',
+  type: 'success',
+  button: {
+    text: 'Хорошо!',
+    type: 'confirm',
+  },
+});
 const btn = async () => {
   modal.show();
   const confirm = await modal.confirm();
@@ -105,5 +126,8 @@ const btn3 = () => {
 };
 const btn5 = () => {
   modal5.show();
+};
+const btn6 = () => {
+  modal6.show();
 };
 </script>

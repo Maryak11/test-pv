@@ -2,12 +2,19 @@
   <div
     v-if="visible"
     :id="id"
-    class="relative flex w-[90%] flex-col justify-between overflow-hidden rounded-xl border-2 border-[#3364c6] bg-[#000519] sm:w-[70%] md:w-[50%] lg:w-[40%]"
+    class="modal-container relative flex w-[90%] flex-col justify-between overflow-hidden rounded-xl border-2 border-[#3364c6] bg-[#000519] transition-all sm:w-[70%] md:w-[50%] lg:w-[40%]"
   >
     <section
       class="relative flex items-center justify-center rounded-tl-xl rounded-tr-xl bg-[#01143f] p-2 text-xl font-semibold text-[#589fe7]"
     >
       {{ header }}
+
+      <div
+        v-if="timer"
+        class="absolute left-4 top-2 text-white"
+      >
+        {{ timer }}
+      </div>
 
       <div
         class="absolute right-2 top-1 cursor-pointer text-white transition-all hover:opacity-50"
@@ -77,6 +84,7 @@
       />
     </section>
   </div>
+  <!-- </Transition> -->
 </template>
 
 <script setup lang="ts">
@@ -93,11 +101,13 @@ const props = defineProps<{
   fields?: boolean | object;
   button?: IButton;
   prop: any;
+  timer?: number;
   headerDescription?: string;
 }>();
 
 const customComponent = ref<IComponentProps | null>(null);
 const customButtons = ref<HTMLElement | null>(null);
+const timer = ref<number>(0);
 
 const emit = defineEmits<{
   (e: 'close', value: string): void;
@@ -125,8 +135,34 @@ const eventClick = (e: Event) => {
   }
 };
 
+const addCustomButtons = () => {
+  const customBtn = document.getElementById('customButtons');
+  if (customBtn) {
+    Array.from(customBtn?.childNodes).forEach((item) => {
+      customButtons.value?.appendChild(item);
+    });
+    customBtn?.remove();
+  }
+};
+
+const startTimer = () => {
+  if (!props.timer) {
+    return;
+  }
+  timer.value = props.timer;
+  const interval = setInterval(() => {
+    timer.value -= 1;
+    if (timer.value === 0) {
+      clearInterval(interval);
+      emit('close', props.id);
+    }
+  }, 1000);
+};
+
 onMounted(() => {
   clickOutsideModal();
+  addCustomButtons(); // метод для добавления в футер кастомных кнопок (пробовал сделать через телепорт, но тогда не работает нормально анимация, в итоге пришел к такому костылю), главное в компоненте который прокидаваешь обретке кнопок задать id="customButtons"
+  startTimer();
 });
 
 onBeforeUnmount(() => {
@@ -149,3 +185,5 @@ watch(
   },
 );
 </script>
+
+<style></style>

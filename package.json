@@ -29,6 +29,7 @@
     "@types/uuid": "^9.0.2",
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
+    "portal-vue": "^3.0.0",
     "postcss-custom-properties": "^13.1.5",
     "uuid": "^9.0.0"
   }
